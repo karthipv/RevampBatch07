@@ -20,6 +20,13 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
+      - name: Create .env files
+        run: |
+          echo "PORT=8080" >> .env.development
+          echo "APP=GHA-DEV-APP" >> .env.development
+          echo "PORT=5000" >> .env.production
+          echo "APP=GHA-PROD-APP" >> .env.production
+          
       - name: Run Node Application
         run: |
           node app.js &
