@@ -1,0 +1,6 @@
+projectKey=NodeApp
+serverUrl=http://localhost:9000
+serverVersion=26.7.0.124771
+dashboardUrl=http://localhost:9000/dashboard?id=NodeApp
+ceTaskId=8041a71f-d5bd-400b-82f3-a3b0d1202a2f
+ceTaskUrl=http://localhost:9000/api/ce/task?id=8041a71f-d5bd-400b-82f3-a3b0d1202a2f
