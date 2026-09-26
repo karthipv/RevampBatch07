@@ -26,5 +26,5 @@ jobs:
         run: |
           SHA=${GITHUB_SHA::7}
           docker tag distroless ${{ vars.DOCKERHUB_USERNAME }}/nodeapp7:$SHA
-          docker push distroless ${{ vars.DOCKERHUB_USERNAME }}/nodeapp7:$SHA
+          docker push ${{ vars.DOCKERHUB_USERNAME }}/nodeapp7:$SHA
           
