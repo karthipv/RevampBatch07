@@ -1,0 +1,22 @@
+name: Sonarqube pipeline
+
+on:
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  sonar:
+    runs-on: ["wsl-ubuntu-pvk"]
+
+    steps:
+      - name: Clone the code
+        uses: actions/checkout@v7
+
+      - name: Sonarqube Analysis
+        uses: SonarSource/sonarqube-scan-action@v8.2.2
+        with:
+          args: >
+            -Dsonar.projectKey=NodeApp
+            -Dsonar.sources=.
+            -Dsonar.sources=.
+            -Dsonar.token=sqp_3b23ad54455f9f8ce68e17cc777e51b88d57d1ed
