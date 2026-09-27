@@ -1,8 +1,8 @@
 name: Node Pipeline
 
 on:
-  push:
-    branches: ["main"]
+  # push:
+  #   branches: ["main"]
   workflow_dispatch: 
     inputs:
       environment:
@@ -25,6 +25,7 @@ on:
 jobs:
   node:
     runs-on: ["wsl-ubuntu-pvk"]
+    environment: prod
 
     steps:
       - name: Clone the code
