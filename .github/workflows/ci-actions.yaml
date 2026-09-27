@@ -1,0 +1,39 @@
+name: Complete CI with Actions
+
+on:
+  workflow_dispatch:
+
+jobs:
+  sonar:
+    runs-on: ["wsl-ubuntu-pvk"]
+    if: github.event_name == 'pull_request'
+
+    steps:
+      - name: Clone the code
+        uses: actions/checkout@v7
+
+      - name: Sonarqube Analysis
+        uses: SonarSource/sonarqube-scan-action@v8.2.2
+        with:
+          args: >
+            -Dsonar.projectKey=NodeApp
+            -Dsonar.sources=.
+            -Dsonar.host.url=${{ vars.SONAR_HOST_URL }}
+            -Dsonar.token=${{ secrets.SONAR_TOKEN }}
+
+  docker:
+    runs-on: ["wsl-ubuntu-pvk"]
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    environment: ${{ github.ref_name == 'main' && 'prod' || 'dev' }}
+
+    steps:
+      - name: Clone the code
+        uses: actions/checkout@v7
+
+      - name: Docker CI
+        uses: karthipv/RevampBatch07/.github/actions/docker-build-push@main
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          filename: Dockerfile.distroless
+          repository: nodeapp7
