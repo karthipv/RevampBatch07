@@ -26,7 +26,7 @@ runs:
 
     - name: Build Docker Image
       shell: bash
-      run: docker build -f inputs.filename -t dockerimage .
+      run: docker build -f ${{ inputs.filename }} -t dockerimage .
 
     - name: Tag and Push Docker Image
       shell: bash
