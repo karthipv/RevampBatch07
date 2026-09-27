@@ -6,6 +6,7 @@ on:
 jobs:
   sonar:
     runs-on: ["wsl-ubuntu-pvk"]
+    if: github.event_name == 'pull_request'
 
     steps:
       - name: Clone the code
@@ -22,6 +23,8 @@ jobs:
 
   docker:
     runs-on: ["wsl-ubuntu-pvk"]
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    environment: ${{ github.ref_name == 'main' && 'prod' || 'dev' }}
 
     steps:
       - name: Clone the code
