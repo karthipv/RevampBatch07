@@ -1,0 +1,36 @@
+name: Docker CI - Build and Push
+
+inputs:
+  username:
+    description: DockerHub username
+    required: true
+  password:
+    description: DockerHub password
+    required: true
+  filename:
+    description: DockerHub filename
+    required: true
+  repository:
+    description: DockerHub repository
+    required: true
+
+runs:
+  using: composite
+
+  steps:
+    - name: Login to DockerHub
+      uses: docker/login-action@v4
+      with:
+        username: ${{ inputs.username }}
+        password: ${{ inputs.password }}
+
+    - name: Build Docker Image
+      shell: bash
+      run: docker build -f inputs.filename -t dockerimage .
+
+    - name: Tag and Push Docker Image
+      shell: bash
+      run: |
+        SHA=${GITHUB_SHA::7}
+        docker tag dockerimage ${{ inputs.username }}/${{ inputs.repository }}:$SHA
+        docker push ${{ inputs.username }}/${{ inputs.repository }}:$SHA
